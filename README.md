@@ -35,8 +35,8 @@ API client can be initialized as following:
 const BandwidthMfa = require('@bandwidth/mfa');
 
 // Configuration parameters and credentials
-BandwidthMfa.Configuration.basicAuthUserName = "apitoken"; // The username to use with basic authentication
-BandwidthMfa.Configuration.basicAuthPassword = "apisecret"; // The password to use with basic authentication
+BandwidthMfa.Configuration.basicAuthUserName = "username"; // The username to use with basic authentication
+BandwidthMfa.Configuration.basicAuthPassword = "password"; // The password to use with basic authentication
 
 ```
 
