@@ -72,7 +72,10 @@ function createVoiceTwoFactor(accountId, body, callback)
 |-----------|------|-------------|
 | accountId |  ``` Required ```  | Bandwidth Account ID with Voice service enabled |
 | body |  ``` Required ```  | A MFA request body in the shape of `TwoFactorCodeRequestSchema`; requiring a `to`, `from`, `applicationId`, and `scope` |
-
+| body.to |  ``` Required ```  | The user's phone number to contact |
+| body.from |  ``` Required ```  | The Bandwidth phone number used to contact the user |
+| body.applicationId |  ``` Required ```  | The voice application ID associated with the _from_ phone number |
+| body.scope |  ``` Required ```  | A custom user identifiable string |
 
 
 #### Example Usage
@@ -108,6 +111,10 @@ function createMessagingTwoFactor(accountId, body, callback)
 |-----------|------|-------------|
 | accountId |  ``` Required ```  | Bandwidth Account ID with Messaging service enabled |
 | body |  ``` Required ```  | A MFA request body in the shape of `TwoFactorCodeRequestSchema`; requiring a `to`, `from`, `applicationId`, and `scope` |
+| body.to |  ``` Required ```  | The user's phone number to contact |
+| body.from |  ``` Required ```  | The Bandwidth phone number used to contact the user |
+| body.applicationId |  ``` Required ```  | The messaging application ID associated with the _from_ phone number |
+| body.scope |  ``` Required ```  | A custom user identifiable string |
 
 
 
@@ -144,6 +151,21 @@ function createVerifyTwoFactor(accountId, body, callback)
 |-----------|------|-------------|
 | accountId |  ``` Required ```  | Bandwidth Account ID with Two-Factor enabled |
 | body |  ``` Required ```  | A MFA request body in the shape of `TwoFactorVerifyRequestSchema`; requiring a `to`, `from`, `applicationId`, `scope`, and `code` |
+| body.to |  ``` Required ```  | The user's phone number to contact |
+| body.from |  ``` Required ```  | The Bandwidth phone number used to contact the user |
+| body.applicationId |  ``` Required ```  | The voice _or_ application ID associated with the _from_ phone number. This value must match the application ID used for the initial request |
+| body.scope |  ``` Required ```  | A custom user identifiable string |
+| body.code |  ``` Required ```  | The 6 digit user code used for validation of the user |
+
+#### Response
+
+| Field | Type | Description |
+|--|--|--|
+| valid | boolean | `true` if the auth request was successful, `false` otherwise |
+
+```
+
+```
 
 
 
@@ -162,6 +184,7 @@ function createVerifyTwoFactor(accountId, body, callback)
 
     controller.createVerifyTwoFactor(accountId, body, function(error, response, context) {
         // Resolution logic
+        console.log(response);
     });
 ```
 
