@@ -162,7 +162,7 @@ function createVerifyTwoFactor(accountId, body, callback)
 | body.from |  ``` Required ```  | The Bandwidth phone number used to contact the user |
 | body.applicationId |  ``` Required ```  | The voice _or_ application ID associated with the _from_ phone number. This value must match the application ID used for the initial request |
 | body.scope | | A optional field to denote what scope or action the 2fa code is addressing.  If not supplied, defaults to \"2FA\". |
-| body.code |  ``` Required ```  | The 6 digit user code used for validation of the user |
+| body.code |  ``` Required ```  | The user code used for validation of the user |
 | body.digits | ``` Required ``` | The number of digits for your 2fa code.  The valid number ranges from 2 to 8, inclusively. |
 | body.delay | ``` Required ``` | The time period, in minutes, to validate the 2fa code.  By setting this to 3 minutes, it will mean any code generated within the last 3 minutes are still valid.  The valid range for delay is between 0 and 15 minutes, exclusively and inclusively, respectively.
 
