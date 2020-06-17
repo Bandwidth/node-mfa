@@ -75,7 +75,7 @@ function createVoiceTwoFactor(accountId, body, callback)
 | body.to |  ``` Required ```  | The user's phone number to contact |
 | body.from |  ``` Required ```  | The Bandwidth phone number used to contact the user |
 | body.applicationId |  ``` Required ```  | The voice application ID associated with the _from_ phone number |
-| body.scope |  ``` Required ```  | A custom user identifiable string |
+| body.scope | | A custom user identifiable string |
 | body.message | ``` Required ``` | The message format of the 2fa code.  There are three values that the system will replace \"{CODE}\", \"{NAME}\", \"{SCOPE}\".  The \"{SCOPE}\" value is optional, while \"{CODE}\" and \"{NAME}\" must be supplied.  As the name would suggest, code will be replace with the actual 2fa code.  Name is replaced with the application name, configured during provisioning of 2fa.  The scope value is the same value sent during the call and partitioned by the server. |
 | body.digits | ``` Required ``` | The number of digits for your 2fa code.  The valid number ranges from 2 to 8, inclusively. |
 
@@ -118,9 +118,9 @@ function createMessagingTwoFactor(accountId, body, callback)
 | body.to |  ``` Required ```  | The user's phone number to contact |
 | body.from |  ``` Required ```  | The Bandwidth phone number used to contact the user |
 | body.applicationId |  ``` Required ```  | The messaging application ID associated with the _from_ phone number |
-| body.scope |  ``` Required ```  | A custom user identifiable string |
+| body.scope | | A custom user identifiable string |
+| body.message | ``` Required ``` | The message format of the 2fa code.  There are three values that the system will replace \"{CODE}\", \"{NAME}\", \"{SCOPE}\".  The \"{SCOPE}\" value is optional, while \"{CODE}\" and \"{NAME}\" must be supplied.  As the name would suggest, code will be replace with the actual 2fa code.  Name is replaced with the application name, configured during provisioning of 2fa.  The scope value is the same value sent during the call and partitioned by the server. |
 | body.digits | ``` Required ``` | The number of digits for your 2fa code.  The valid number ranges from 2 to 8, inclusively. |
-| body.delay | ``` Required ``` | The time period, in minutes, to validate the 2fa code.  By setting this to 3 minutes, it will mean any code generated within the last 3 minutes are still valid.  The valid range for delay is between 0 and 15 minutes, exclusively and inclusively, respectively.
 
 
 #### Example Usage
@@ -161,8 +161,10 @@ function createVerifyTwoFactor(accountId, body, callback)
 | body.to |  ``` Required ```  | The user's phone number to contact |
 | body.from |  ``` Required ```  | The Bandwidth phone number used to contact the user |
 | body.applicationId |  ``` Required ```  | The voice _or_ application ID associated with the _from_ phone number. This value must match the application ID used for the initial request |
-| body.scope |  ``` Required ```  | A custom user identifiable string |
+| body.scope | | A custom user identifiable string |
 | body.code |  ``` Required ```  | The 6 digit user code used for validation of the user |
+| body.digits | ``` Required ``` | The number of digits for your 2fa code.  The valid number ranges from 2 to 8, inclusively. |
+| body.delay | ``` Required ``` | The time period, in minutes, to validate the 2fa code.  By setting this to 3 minutes, it will mean any code generated within the last 3 minutes are still valid.  The valid range for delay is between 0 and 15 minutes, exclusively and inclusively, respectively.
 
 #### Response
 
