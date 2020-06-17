@@ -91,7 +91,7 @@ function createVoiceTwoFactor(accountId, body, callback)
         applicationId: "1-2-3",
         scope: "authorization",
         digits: 5,
-        message: "{CODE} {NAME}"
+        message: "Your temporary {NAME} {SCOPE} code is {CODE}"
     });
 
     controller.createVoiceTwoFactor(accountId, body, function(error, response, context) {
@@ -134,7 +134,7 @@ function createMessagingTwoFactor(accountId, body, callback)
         applicationId: "1-2-3",
         scope: "authorization",
         digits: 5,
-        delay: 2
+        message: "Your temporary {NAME} {SCOPE} code is {CODE}"
     });
 
     controller.createMessagingTwoFactor(accountId, body, function(error, response, context) {
@@ -188,7 +188,9 @@ function createVerifyTwoFactor(accountId, body, callback)
         to: "+18888888888",
         applicationId: "1-2-3",
         scope: "authorization",
-        code: "123456"
+        code: "123456",
+        digits: 5,
+        delay: 2
     });
 
     controller.createVerifyTwoFactor(accountId, body, function(error, response, context) {
