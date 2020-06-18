@@ -164,7 +164,7 @@ function createVerifyTwoFactor(accountId, body, callback)
 | body.scope | | A optional field to denote what scope or action the 2fa code is addressing.  If not supplied, defaults to \"2FA\". |
 | body.code |  ``` Required ```  | The user code used for validation of the user |
 | body.digits | ``` Required ``` | The number of digits for your 2fa code.  The valid number ranges from 2 to 8, inclusively. |
-| body.delay | ``` Required ``` | The time period, in minutes, to validate the 2fa code.  By setting this to 3 minutes, it will mean any code generated within the last 3 minutes are still valid.  The valid range for delay is between 0 and 15 minutes, exclusively and inclusively, respectively.
+| body.expirationTimeInMinutes | ``` Required ``` | The time period, in minutes, to validate the 2fa code.  By setting this to 3 minutes, it will mean any code generated within the last 3 minutes are still valid.  The valid range for expirationTimeInMinutes is between 0 and 15 minutes, exclusively and inclusively, respectively.
 
 #### Response
 
@@ -190,7 +190,7 @@ function createVerifyTwoFactor(accountId, body, callback)
         scope: "authorization",
         code: "123456",
         digits: 5,
-        delay: 2
+        expirationTimeInMinutes: 2
     });
 
     controller.createVerifyTwoFactor(accountId, body, function(error, response, context) {
