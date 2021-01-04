@@ -1,6 +1,6 @@
 {
   "name": "@bandwidth/mfa",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Bandwidth's Two-Factor Authentication service",
   "main": "./lib/index.js",
   "repository": {
