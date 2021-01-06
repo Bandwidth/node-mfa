@@ -27,7 +27,7 @@ jobs:
           git config user.email gh-actions-${GITHUB_ACTOR}@github.com
           git remote add gh-origin https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
           npm version ${MAJOR_MINOR_SEMVER} --force -m "Bump version to %s"
-          git push gh-origin HEAD:master --tags
+          git push gh-origin HEAD:main --tags
           echo "//registry.npmjs.org/:_authToken=$NPM_API_TOKEN" >> ~/.npmrc
           npm publish --access public
         env:
