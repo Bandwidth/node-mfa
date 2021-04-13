@@ -35,4 +35,4 @@ jobs:
             npm version $RELEASE_VERSION --no-git-tag-version
             npm publish --access public
       env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_API_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
