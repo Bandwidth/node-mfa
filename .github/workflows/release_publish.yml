@@ -21,6 +21,7 @@ jobs:
     - name: Build and test npm package
       run: |
            npm install
+           npm run build
            npm run test --if-present
       env:
         BANDWIDTH_ACCOUNT_ID: ${{ secrets.BANDWIDTH_ACCOUNT_ID }}
