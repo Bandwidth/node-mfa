@@ -1,35 +1,38 @@
-name: Publish Release
-
+name: Deploy
 on:
   release:
     types:
       - published
-
 jobs:
-  publish-npm:
-    # Only run if release is a prod release
-    if: "!github.event.release.prerelease"
+  deploy:
+    name: Deploy
     runs-on: ubuntu-latest
+    if: ${{ !github.event.release.prerelease && github.event.release.target_commitish == 'main' }}
     steps:
-      - uses: actions/checkout@v1
-      - name: Install Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: '14'
-          check-latest: true
-      - name: npm install
-        run: npm install
-      - name: npm version and publish
-        run: |
-          export MAJOR_MINOR_SEMVER=${GITHUB_REF:10}
-          echo "MAJOR_MINOR_SEMVER=${MAJOR_MINOR_SEMVER}"
-          git config user.name $GITHUB_ACTOR
-          git config user.email gh-actions-${GITHUB_ACTOR}@github.com
-          git remote add gh-origin https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-          npm version ${MAJOR_MINOR_SEMVER} --force -m "Bump version to %s"
-          git push gh-origin HEAD:main --tags
-          echo "//registry.npmjs.org/:_authToken=$NPM_API_TOKEN" >> ~/.npmrc
-          npm publish --access public
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_API_TOKEN: ${{ secrets.NPM_API_TOKEN }}
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Set release version
+      run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/v}" >> $GITHUB_ENV
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+        registry-url: 'https://registry.npmjs.org'
+    - name: Build and test npm package
+      run: |
+           npm install
+           npm run test --if-present
+      env:
+        BANDWIDTH_ACCOUNT_ID: ${{ secrets.BANDWIDTH_ACCOUNT_ID }}
+        BANDWIDTH_USERNAME: ${{ secrets.BANDWIDTH_USERNAME }}
+        BANDWIDTH_PASSWORD: ${{ secrets.BANDWIDTH_PASSWORD }}
+        MFA_VOICE_APPLICATION_ID: ${{ secrets.MFA_VOICE_APPLICATION_ID }}
+        MFA_MESSAGING_APPLICATION_ID: ${{ secrets.MFA_MESSAGING_APPLICATION_ID }}
+        PHONE_NUMBER_INBOUND: ${{ secrets.PHONE_NUMBER_INBOUND }}
+        PHONE_NUMBER_MFA: ${{ secrets.PHONE_NUMBER_MFA }}
+    - name: Publish npm package
+      run: |
+            npm version $RELEASE_VERSION --no-git-tag-version
+            npm publish --access public
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
