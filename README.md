@@ -1,6 +1,6 @@
 # Bandwidth Node Multi-Factor Authentication SDK
 
-Note: As of version 3.0.0, this package has been upgraded to Typescript
+Note: As of version 3.0.0, this package has been upgraded to TypeScript
 
 ## Getting Started
 
