@@ -9,8 +9,8 @@ let controller;
 
 beforeEach(() => {
     const client = new Client({
-        basicAuthUserName: process.env.BANDWIDTH_USERNAME,
-        basicAuthPassword: process.env.BANDWIDTH_PASSWORD
+        basicAuthUserName: process.env.BW_USERNAME,
+        basicAuthPassword: process.env.BW_PASSWORD
     });
 
     controller = new MFAController(client);
@@ -19,10 +19,10 @@ beforeEach(() => {
 describe('api', () => {
     it('should create a voice MFA request, and subsequent verify request', async () => {
         //create voice mfa request
-        const accountId = process.env.BANDWIDTH_ACCOUNT_ID;
-        const from = process.env.PHONE_NUMBER_MFA;
-        const to = process.env.PHONE_NUMBER_INBOUND;
-        const applicationId = process.env.MFA_VOICE_APPLICATION_ID;
+        const accountId = process.env.BW_ACCOUNT_ID;
+        const from = process.env.BW_NUMBER;
+        const to = process.env.USER_NUMBER;
+        const applicationId = process.env.BW_VOICE_APPLICATION_ID;
         const scope = "scope";
         const digits = 6;
         const message = "Your temporary {NAME} {SCOPE} code is {CODE}";
@@ -59,8 +59,8 @@ describe('api', () => {
     });
     
     it('should create a messaging MFA request', async () => {
-        const accountId = process.env.BANDWIDTH_ACCOUNT_ID;
-        const from = process.env.PHONE_NUMBER_MFA;
+        const accountId = process.env.BW_ACCOUNT_ID;
+        const from = process.env.BW_NUMBER;
         const to = process.env.PHONE_NUMBER_INBOUND;
         const applicationId = process.env.MFA_MESSAGING_APPLICATION_ID;
         const scope = "scope";
@@ -81,10 +81,10 @@ describe('api', () => {
     });
 
     it('should throw an error on an invalid TN for messaging', async () => {
-        const accountId = process.env.BANDWIDTH_ACCOUNT_ID;
-        const from = process.env.PHONE_NUMBER_MFA;
+        const accountId = process.env.BW_ACCOUNT_ID;
+        const from = process.env.BW_NUMBER;
         const to = "+1invalid";
-        const applicationId = process.env.MFA_MESSAGING_APPLICATION_ID;
+        const applicationId = process.env.BW_MESSAGING_APPLICATION_ID;
         const scope = "scope";
         const digits = 6;
         const message = "Your temporary {NAME} {SCOPE} code is {CODE}";
@@ -106,10 +106,10 @@ describe('api', () => {
     });
 
     it('should throw an error on an invalid TN for voice', async () => {
-        const accountId = process.env.BANDWIDTH_ACCOUNT_ID;
-        const from = process.env.PHONE_NUMBER_MFA;
+        const accountId = process.env.BW_ACCOUNT_ID;
+        const from = process.env.BW_NUMBER;
         const to = "+1invalid";
-        const applicationId = process.env.MFA_VOICE_APPLICATION_ID;
+        const applicationId = process.env.BW_VOICE_APPLICATION_ID;
         const scope = "scope";
         const digits = 6;
         const message = "Your temporary {NAME} {SCOPE} code is {CODE}";
