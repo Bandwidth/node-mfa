@@ -24,16 +24,22 @@ jobs:
            npm run build
            npm run test --if-present
       env:
-        BANDWIDTH_ACCOUNT_ID: ${{ secrets.BANDWIDTH_ACCOUNT_ID }}
-        BANDWIDTH_USERNAME: ${{ secrets.BANDWIDTH_USERNAME }}
-        BANDWIDTH_PASSWORD: ${{ secrets.BANDWIDTH_PASSWORD }}
-        MFA_VOICE_APPLICATION_ID: ${{ secrets.MFA_VOICE_APPLICATION_ID }}
-        MFA_MESSAGING_APPLICATION_ID: ${{ secrets.MFA_MESSAGING_APPLICATION_ID }}
-        PHONE_NUMBER_INBOUND: ${{ secrets.PHONE_NUMBER_INBOUND }}
-        PHONE_NUMBER_MFA: ${{ secrets.PHONE_NUMBER_MFA }}
+        BW_ACCOUNT_ID: ${{ secrets.BW_ACCOUNT_ID }}
+        BW_USERNAME: ${{ secrets.BW_USERNAME }}
+        BW_PASSWORD: ${{ secrets.BW_PASSWORD }}
+        BW_VOICE_APPLICATION_ID: ${{ secrets.BW_VOICE_APPLICATION_ID }}
+        BW_MESSAGING_APPLICATION_ID: ${{ secrets.BW_MESSAGING_APPLICATION_ID }}
+        BW_NUMBER: ${{ secrets.BW_NUMBER }}
+        USER_NUMBER: ${{ secrets.USER_NUMBER }}
     - name: Publish npm package
       run: |
             npm version $RELEASE_VERSION --no-git-tag-version
             npm publish --access public
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+    - uses: Bandwidth/build-notify-slack-action@v1.0.0
+      if: always()
+      with:
+        job-status: ${{ job.status }}
+        slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+        slack-channel: ${{ secrets.SLACK_CHANNEL }}
