@@ -38,7 +38,7 @@ jobs:
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
     - uses: Bandwidth/build-notify-slack-action@v1.0.0
-      if: failure()
+      if: always()
       with:
         job-status: ${{ job.status }}
         slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
