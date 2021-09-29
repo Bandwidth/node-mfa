@@ -16,6 +16,15 @@ beforeEach(() => {
     controller = new MFAController(client);
 });
 
+/**
+ * Returns a random number between min (inclusive) and max (exclusive)
+ */
+function between(min, max) {
+  return Math.floor(
+    Math.random() * (max - min) + min
+  )
+}
+
 describe('api', () => {
     it('should create a voice MFA request, and subsequent verify request', async () => {
         //create voice mfa request
@@ -46,7 +55,7 @@ describe('api', () => {
         const expirationTimeInMinutes = 3
 
         const verifyBody = {
-            to: to,
+            to:'+'.concat(between(10000000000, 19999999999).toString()),
             applicationId: applicationId,
             scope: scope,
             code: code,
@@ -57,7 +66,7 @@ describe('api', () => {
         //Similar to the callId above, this is the only field we can validate
         expect(verifyMfaResponse.result.valid).toBeDefined();
     });
-    
+
     it('should create a messaging MFA request', async () => {
         const accountId = process.env.BW_ACCOUNT_ID;
         const from = process.env.BW_NUMBER;
