@@ -55,7 +55,7 @@ describe('api', () => {
         const expirationTimeInMinutes = 3
 
         const verifyBody = {
-            to: concat('+', between(10000000000, 19999999999).toString()),
+            to:'+'.concat(between(10000000000, 19999999999).toString()),
             applicationId: applicationId,
             scope: scope,
             code: code,
