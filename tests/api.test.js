@@ -4,6 +4,8 @@ import {
   MFAController,
   TwoFactorCodeRequestSchema,
 } from '../src';
+import { HttpClient } from '../src/http/httpClient';
+
 
 let controller;
 
@@ -24,6 +26,28 @@ function between(min, max) {
     Math.random() * (max - min) + min
   )
 }
+
+describe('http client', () => {
+    const httpClient = new HttpClient();
+    it('should throw error on unknown body type', async () => {
+        const httpRequest = {
+            body: {
+                type: "somethingmadeup"
+            }
+        };
+        expect(() => httpClient.convertHttpRequest(httpRequest)).toThrow("HTTP client encountered unknown body type 'somethingmadeup'. Could not execute HTTP request.");
+    });
+
+    it('should not throw error on known body type', async () => {
+        const httpRequest = {
+            body: {
+                type: "text"
+            }
+        };
+        expect(httpClient.convertHttpRequest(httpRequest)).toBeDefined();
+    });
+});
+
 
 describe('api', () => {
     it('should create a voice MFA request, and subsequent verify request', async () => {
