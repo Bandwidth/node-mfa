@@ -9,41 +9,41 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ !github.event.release.prerelease && github.event.release.target_commitish == 'main' }}
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Set release version
-      run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/v}" >> $GITHUB_ENV
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set release version
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/v}" >> $GITHUB_ENV
 
-    - name: Setup Node
-      uses: actions/setup-node@v2
-      with:
-        node-version: '12.x'
-        registry-url: 'https://registry.npmjs.org'
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "12.x"
+          registry-url: "https://registry.npmjs.org"
 
-    - name: Build and test npm package
-      run: |
-           npm install
-           npm run build
-           npm run test --if-present
-      env:
-        BW_ACCOUNT_ID: ${{ secrets.BW_ACCOUNT_ID }}
-        BW_USERNAME: ${{ secrets.BW_USERNAME }}
-        BW_PASSWORD: ${{ secrets.BW_PASSWORD }}
-        BW_VOICE_APPLICATION_ID: ${{ secrets.BW_VOICE_APPLICATION_ID }}
-        BW_MESSAGING_APPLICATION_ID: ${{ secrets.BW_MESSAGING_APPLICATION_ID }}
-        BW_NUMBER: ${{ secrets.BW_NUMBER }}
-        USER_NUMBER: ${{ secrets.USER_NUMBER }}
+      - name: Build and test npm package
+        run: |
+          npm install
+          npm run build
+          npm run test --if-present
+        env:
+          BW_ACCOUNT_ID: ${{ secrets.BW_ACCOUNT_ID }}
+          BW_USERNAME: ${{ secrets.BW_USERNAME }}
+          BW_PASSWORD: ${{ secrets.BW_PASSWORD }}
+          BW_VOICE_APPLICATION_ID: ${{ secrets.BW_VOICE_APPLICATION_ID }}
+          BW_MESSAGING_APPLICATION_ID: ${{ secrets.BW_MESSAGING_APPLICATION_ID }}
+          BW_NUMBER: ${{ secrets.BW_NUMBER }}
+          USER_NUMBER: ${{ secrets.USER_NUMBER }}
 
-    - name: Publish npm package
-      run: |
-            npm version $RELEASE_VERSION --no-git-tag-version
-            npm publish --access public
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+      - name: Publish npm package
+        run: |
+          npm version $RELEASE_VERSION --no-git-tag-version
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
 
-    - uses: Bandwidth/build-notify-slack-action@v1.0.0
-      if: always()
-      with:
-        job-status: ${{ job.status }}
-        slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
-        slack-channel: ${{ secrets.SLACK_CHANNEL }}
+      - uses: Bandwidth/build-notify-slack-action@v1.0.0
+        if: always()
+        with:
+          job-status: ${{ job.status }}
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          slack-channel: ${{ secrets.SLACK_CHANNEL }}
