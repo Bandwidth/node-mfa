@@ -8,7 +8,7 @@ on:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref }}
-  cancel-in-progress: true  
+  cancel-in-progress: true
 
 jobs:
   test:
@@ -17,34 +17,36 @@ jobs:
     strategy:
       matrix:
         os: [windows-2022, windows-2019, ubuntu-20.04, ubuntu-22.04]
-        node-version: ['12', '14', '16']
+        node-version: ["12", "14", "16"]
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-    - name: Setup Node
-      uses: actions/setup-node@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - name: NPM Install
-      run: npm install
+      - name: NPM Install
+        run: npm install
 
-    - name: NPM Build
-      run: npm run build --if-present
+      - name: NPM Build
+        run: npm run build --if-present
 
-    - name: NPM Test
-      run: npm run test --if-present
-      env:
-        BW_ACCOUNT_ID: ${{ secrets.BW_ACCOUNT_ID }}
-        BW_USERNAME: ${{ secrets.BW_USERNAME }}
-        BW_PASSWORD: ${{ secrets.BW_PASSWORD }}
-        BW_VOICE_APPLICATION_ID: ${{ secrets.BW_VOICE_APPLICATION_ID }}
-        BW_MESSAGING_APPLICATION_ID: ${{ secrets.BW_MESSAGING_APPLICATION_ID }}
-        BW_NUMBER: ${{ secrets.BW_NUMBER }}
-        USER_NUMBER: ${{ secrets.USER_NUMBER }}
+      - name: NPM Test
+        run: npm run test --if-present
+        env:
+          BW_ACCOUNT_ID: ${{ secrets.BW_ACCOUNT_ID }}
+          BW_USERNAME: ${{ secrets.BW_USERNAME }}
+          BW_PASSWORD: ${{ secrets.BW_PASSWORD }}
+          BW_VOICE_APPLICATION_ID: ${{ secrets.BW_VOICE_APPLICATION_ID }}
+          BW_MESSAGING_APPLICATION_ID: ${{ secrets.BW_MESSAGING_APPLICATION_ID }}
+          BW_NUMBER: ${{ secrets.BW_NUMBER }}
+          USER_NUMBER: ${{ secrets.USER_NUMBER }}
 
-    - uses: Bandwidth/build-notify-slack-action@v1.0.0
-      if: failure() && !github.event.pull_request.draft
-      with:
-        job-status: ${{ job.status }}
-        slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
-        slack-channel: ${{ secrets.SLACK_CHANNEL }}
+      - uses: Bandwidth/build-notify-slack-action@v1.0.0
+        if: failure() && !github.event.pull_request.draft
+        with:
+          job-status: ${{ job.status }}
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          slack-channel: ${{ secrets.SLACK_CHANNEL }}
