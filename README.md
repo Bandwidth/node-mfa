@@ -1,3 +1,7 @@
+# $${\color{orange}This \space package  \space has  \space been  \space deprecated}$$
+# Please use the new [node-sdk](https://github.com/Bandwidth/node-sdk)
+## The new package is on NPM as [bandwidth-sdk](https://www.npmjs.com/package/bandwidth-sdk) (`npm i bandwidth-sdk`)
+
 # Bandwidth Node Multi-Factor Authentication SDK
 
 Note: As of version 3.0.0, this package has been upgraded to TypeScript
