@@ -16,14 +16,14 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-2022, windows-2019, ubuntu-20.04, ubuntu-22.04]
+        os: [windows-2022, windows-2025, ubuntu-22.04, ubuntu-24.04]
         node-version: ["12", "14", "16"]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
 
@@ -44,7 +44,7 @@ jobs:
           BW_NUMBER: ${{ secrets.BW_NUMBER }}
           USER_NUMBER: ${{ secrets.USER_NUMBER }}
 
-      - uses: Bandwidth/build-notify-slack-action@v1.0.0
+      - uses: Bandwidth/build-notify-slack-action@v2
         if: failure() && !github.event.pull_request.draft
         with:
           job-status: ${{ job.status }}
