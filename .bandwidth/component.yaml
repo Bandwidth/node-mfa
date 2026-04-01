@@ -1,0 +1,14 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  schemaVersion: v1.0.0
+  name: node-mfa
+  description: Note: As of version 3.0.0, this package has been upgraded to TypeScript
+  annotations:
+    github.com/project-slug: Bandwidth/node-mfa
+    organization: BW
+    costCenter: Development - Software Infra
+spec:
+  type: Service
+  owner: github/band-swi
+  lifecycle: Available
