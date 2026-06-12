@@ -3,7 +3,7 @@ kind: Component
 metadata:
   schemaVersion: v1.0.0
   name: node-mfa
-  description: Note: As of version 3.0.0, this package has been upgraded to TypeScript
+  description: "Note: As of version 3.0.0, this package has been upgraded to TypeScript"
   annotations:
     github.com/project-slug: Bandwidth/node-mfa
     organization: BW
